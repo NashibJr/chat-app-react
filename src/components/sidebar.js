@@ -1,11 +1,10 @@
 import React from "react";
-import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import users from "../dummy/users";
 import User from "./user";
 
 const Sidebar = () => {
   return (
-    <nav className="fixed-left navigation">
+    <nav className="fixed-left">
       {" "}
       <div className="container-fluid">
         <div className="row flex-nowrap">
@@ -13,10 +12,10 @@ const Sidebar = () => {
             <div id="sidebar" className="collapse collapse-horizontal show">
               <div id="sidebar-nav" className="list-group border-0 rounded-0">
                 <div className="p-2">
-                  <h4 style={{ width: "45vh" }} className="fw-bold">
+                  <h4 style={{ width: "100%" }} className="fw-bold">
                     Marcus Rashford M.B.E
                   </h4>
-                  <p>@john</p>
+                  <p className="fw-bold">@rashfordmbe</p>
                 </div>
                 <div>
                   <input
@@ -26,23 +25,12 @@ const Sidebar = () => {
                   />
                 </div>
                 <ul className="bg-light users">
-                  <li></li>
                   {users.map((user) => (
                     <User key={user.id} user={user} />
                   ))}
                 </ul>
               </div>
             </div>
-          </div>
-          <div className="col ps-md-2 pt-2">
-            <a
-              href="#"
-              data-bs-target="#sidebar"
-              data-bs-toggle="collapse"
-              className="border rounded-3 p-1 text-decoration-none"
-            >
-              <TbLayoutSidebarLeftCollapse />
-            </a>
           </div>
         </div>
       </div>
