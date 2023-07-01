@@ -8,7 +8,7 @@
   width: 300px;
 }
 
-.users::-webkit-scrollbar, body::-webkit-scrollbar {
+.users::-webkit-scrollbar, body::-webkit-scrollbar,.messages::-webkit-scrollbar {
   display: none;
 }
 
@@ -48,6 +48,17 @@
   opacity: .7;
 }
 
+.messages-content {
+  height: 76vh;
+  border-radius: 10px;
+  width: 100%;
+  /* background-color: red; */
+}
+
+.messages {
+  overflow-y: scroll;
+}
+
 @media screen and (min-width: 601px) {
   .hide-collapse-button {
     display: none;
@@ -57,5 +68,9 @@
 @media screen and (max-width: 601px) {
   .users {
     width: 250px;
+  }
+  .messages-content {
+    width: 300px;
+    margin-left: -6%;
   }
 }

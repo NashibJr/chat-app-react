@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "../components/sidebar";
 import NavigationBar from "../components/navigationBar";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
+import Messages from "../components/messages";
 
 const Main = () => {
   return (
@@ -18,6 +19,7 @@ const Main = () => {
       </div>
       <div className="container-fluid">
         <NavigationBar />
+        <Messages />
       </div>
     </div>
   );
