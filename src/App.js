@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/signup";
 
 const App = () => {
-  return <Signup />;
+  return <Login />;
 };
 
 export default App;
