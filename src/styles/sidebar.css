@@ -52,11 +52,11 @@
   height: 76vh;
   border-radius: 10px;
   width: 100%;
-  /* background-color: red; */
 }
 
 .messages {
   overflow-y: scroll;
+  height: 68.3vh;
 }
 
 @media screen and (min-width: 601px) {
