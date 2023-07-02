@@ -8,7 +8,7 @@ const Messages = () => {
           <p className="bg-light p-2 rounded-1 w-50">Recieved messages</p>
         </div>
         <div className="m-2 text-light d-flex flex-wrap justify-content-end flex-colum">
-          <p className="bg-primary p-2 rounded-1 w-50">Send messages</p>
+          <p className="bg-dark p-2 rounded-1 w-50">Send messages</p>
         </div>
       </div>
       <form style={{ marginTop: "auto", marginBottom: -12 }}>
