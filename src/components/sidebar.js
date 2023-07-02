@@ -15,7 +15,17 @@ const Sidebar = () => {
                   <h4 style={{ width: "100%" }} className="fw-bold">
                     Marcus Rashford M.B.E
                   </h4>
-                  <p className="fw-bold">@rashfordmbe</p>
+                  <span className="d-flex flex-wrap justify-content-between">
+                    <p className="fw-bold">@rashfordmbe</p>
+                    <button
+                      type="button"
+                      className="btn btn-dark"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Explore friends
+                    </button>
+                  </span>
                 </div>
                 <div>
                   <input
