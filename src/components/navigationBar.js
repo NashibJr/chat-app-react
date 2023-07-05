@@ -1,6 +1,17 @@
 import React from "react";
+import { CometChat } from "@cometchat-pro/chat";
+import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await CometChat.logout();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div
       className="m-2 p-2 rounded-4"
@@ -8,7 +19,7 @@ const NavigationBar = () => {
     >
       <div className="d-flex justify-content-between border-bottom p-1 pb-2">
         <div>Henry Thiery</div>
-        <button type="button" className="button-content">
+        <button type="button" className="button-content" onClick={handleLogout}>
           <span>Logout</span>
         </button>
       </div>

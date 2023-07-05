@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/input";
+import { CometChat } from "@cometchat-pro/chat";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   backgroundColor: "rgb(241, 240, 245)",
@@ -8,6 +10,21 @@ const style = {
 
 const Login = () => {
   const [state, setState] = useState({ username: "", password: "" });
+  const navigate = useNavigate();
+  useEffect(() => {
+    const listenerID = (Math.random() * 10000000).toFixed(0);
+    CometChat.addLoginListener(
+      listenerID,
+      new CometChat.LoginListener({
+        logoutSuccess: () => {
+          console.log("logoutSuccess");
+        },
+        logoutFailure: (e) => {
+          console.log("logoutFailure", e);
+        },
+      })
+    );
+  }, []);
   const attributes = [
     {
       type: "text",
@@ -25,6 +42,22 @@ const Login = () => {
 
   const handleChange = (event) =>
     setState({ ...state, [event.target.name]: event.target.value });
+
+  const handleLogin = async (event) => {
+    try {
+      event.preventDefault();
+      const authKey = "34334c22113e7a65f55f152f32f894bc270e6a21";
+      const { password } = state;
+      const user = await CometChat.getLoggedinUser();
+      if (!user) {
+        const user_ = await CometChat.login(password, authKey);
+        navigate("/main");
+        console.log("successfully loggedin", user_);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div
       className="mx-auto mt-5 d-flex flex-column justify-content-center align-items-center"
@@ -47,11 +80,12 @@ const Login = () => {
           type="button"
           className="input-content"
           style={{ backgroundColor: "#000", color: "#fff" }}
+          onClick={handleLogin}
         >
           Login
         </button>
         <p>
-          or create an account <a href="#">signup</a>
+          or create an account <a href="/signup">signup</a>
         </p>
       </form>
     </div>

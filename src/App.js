@@ -3,13 +3,18 @@ import Main from "./pages/main";
 import Login from "./pages/Login";
 import Signup from "./pages/signup";
 import FriendsModal from "./modals/friendsModal";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const App = () => {
-  console.log(process.env.REACT_APP_ACCOUNT_KEY, ">>>>>");
-  console.log(process.env.REACT_APP_AUTH_SECRET, "||||||");
   return (
     <div>
-      <Signup />
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route path="/main" element={<Main />} />
+          <Route exact path="/signup" element={<Signup />} />
+        </Routes>
+      </Router>
       <FriendsModal />
     </div>
   );
