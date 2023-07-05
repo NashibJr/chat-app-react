@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Input from "../components/input";
 import { CometChat } from "@cometchat-pro/chat";
 import { useNavigate } from "react-router-dom";
+import { getUserCredentials } from "../redux/users/userSlice";
+import { useDispatch } from "react-redux";
 
 const style = {
   backgroundColor: "rgb(241, 240, 245)",
@@ -13,6 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const listenerID = (Math.random() * 10000000).toFixed(0);
@@ -58,6 +61,7 @@ const Login = () => {
       if (!user) {
         const user_ = await CometChat.login(password, authKey);
         alert("successfully loggedin");
+        dispatch(getUserCredentials(user_));
         navigate("/main");
         console.log("successfully loggedin", user_);
       }

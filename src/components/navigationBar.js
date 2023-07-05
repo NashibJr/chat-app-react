@@ -1,12 +1,17 @@
 import React from "react";
 import { CometChat } from "@cometchat-pro/chat";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearUserOnLogout } from "../redux/users/userSlice";
 
 const NavigationBar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleLogout = async () => {
     try {
       await CometChat.logout();
+      dispatch(clearUserOnLogout());
       navigate("/");
     } catch (error) {
       console.log(error);
