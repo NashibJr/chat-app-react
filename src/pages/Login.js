@@ -11,6 +11,9 @@ const style = {
 const Login = () => {
   const [state, setState] = useState({ username: "", password: "" });
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
+
   useEffect(() => {
     const listenerID = (Math.random() * 10000000).toFixed(0);
     CometChat.addLoginListener(
@@ -25,6 +28,7 @@ const Login = () => {
       })
     );
   }, []);
+
   const attributes = [
     {
       type: "text",
@@ -40,6 +44,8 @@ const Login = () => {
     },
   ];
 
+  const canSubmit = state.password && state.username;
+
   const handleChange = (event) =>
     setState({ ...state, [event.target.name]: event.target.value });
 
@@ -51,11 +57,17 @@ const Login = () => {
       const user = await CometChat.getLoggedinUser();
       if (!user) {
         const user_ = await CometChat.login(password, authKey);
+        alert("successfully loggedin");
         navigate("/main");
         console.log("successfully loggedin", user_);
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessage(error.message);
+      if (errorMessage) {
+        setMessage(
+          "This account does not exist. Please check your details and try again."
+        );
+      }
     }
   };
   return (
@@ -81,9 +93,16 @@ const Login = () => {
           className="input-content"
           style={{ backgroundColor: "#000", color: "#fff" }}
           onClick={handleLogin}
+          disabled={!canSubmit}
         >
           Login
         </button>
+        <p
+          style={{ fontSize: 12, marginBottom: 0 }}
+          className="text-danger fw-bold text-center"
+        >
+          {message}
+        </p>
         <p>
           or create an account <a href="/signup">signup</a>
         </p>
