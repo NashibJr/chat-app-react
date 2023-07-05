@@ -11,7 +11,7 @@ const Sidebar = () => {
   }, [searchedUserName]);
   const user = useSelector((state) => state.user);
   const username = user.user.name;
-  const handle = `@${username.toLowerCase().split(" ")[0]}`;
+  const handle = `@${username?.toLowerCase().split(" ")[0]}`;
   const searchUsers = () => {
     const searchedUsers = users.filter((user) =>
       user.username.includes(searchedUserName)
