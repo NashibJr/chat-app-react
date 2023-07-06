@@ -63,7 +63,6 @@ const Login = () => {
         alert("successfully loggedin");
         dispatch(getUserCredentials(user_));
         navigate("/main");
-        console.log("successfully loggedin", user_);
       }
     } catch (error) {
       setErrorMessage(error.message);

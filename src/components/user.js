@@ -1,10 +1,10 @@
 import React from "react";
 
-const User = ({ user: { username, handle } }) => {
+const User = ({ user: { name, handle } }) => {
   return (
     <li className="user-list d-flex justify-content-between">
       <div>
-        <p className="h6 fw-bold">{username}</p>
+        <p className="h6 fw-bold">{name}</p>
         <p style={{ fontSize: 12, marginTop: -5 }}>{handle}</p>
       </div>
       <div

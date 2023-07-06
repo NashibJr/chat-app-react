@@ -1,20 +1,41 @@
 import React, { useEffect, useState } from "react";
-import users from "../dummy/users";
 import User from "./user";
 import { useSelector } from "react-redux";
+import { CometChat } from "@cometchat-pro/chat";
 
 const Sidebar = () => {
   const [searchedUserName, setSearchUserName] = useState("");
   const [wantedUsers, setWantedUsers] = useState([]);
+  const [users, setUsers] = useState([]);
+
   useEffect(() => {
     searchUsers();
+    fetchUsers();
   }, [searchedUserName]);
+
   const user = useSelector((state) => state.user);
   const username = user.user.name;
   const handle = `@${username?.toLowerCase().split(" ")[0]}`;
+
+  const fetchUsers = async () => {
+    try {
+      const userRequest = new CometChat.UsersRequestBuilder()
+        .setLimit(30)
+        .build();
+      let cometchatUsers = await userRequest.fetchNext();
+      cometchatUsers = cometchatUsers.map((user) => ({
+        ...user,
+        handle: `@${user.name.toLowerCase().split(" ")[0]}`,
+      }));
+      setUsers(cometchatUsers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const searchUsers = () => {
     const searchedUsers = users.filter((user) =>
-      user.username.includes(searchedUserName)
+      user.name.includes(searchedUserName)
     );
     setWantedUsers(searchedUsers);
   };
@@ -54,7 +75,7 @@ const Sidebar = () => {
                 </div>
                 <ul className="bg-light users">
                   {renderedUsers.map((user) => (
-                    <User key={user.id} user={user} />
+                    <User key={user.uid} user={user} />
                   ))}
                 </ul>
               </div>
