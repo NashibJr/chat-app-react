@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import User from "./user";
 import { useSelector } from "react-redux";
-import { CometChat } from "@cometchat-pro/chat";
+import helperFunctions from "../app/helperFunctions";
 
 const Sidebar = () => {
   const [searchedUserName, setSearchUserName] = useState("");
@@ -18,19 +18,8 @@ const Sidebar = () => {
   const handle = `@${username?.toLowerCase().split(" ")[0]}`;
 
   const fetchUsers = async () => {
-    try {
-      const userRequest = new CometChat.UsersRequestBuilder()
-        .setLimit(30)
-        .build();
-      let cometchatUsers = await userRequest.fetchNext();
-      cometchatUsers = cometchatUsers.map((user) => ({
-        ...user,
-        handle: `@${user.name.toLowerCase().split(" ")[0]}`,
-      }));
-      setUsers(cometchatUsers);
-    } catch (error) {
-      console.log(error);
-    }
+    const cometchatUsers = await helperFunctions.getUsers();
+    setUsers(cometchatUsers);
   };
 
   const searchUsers = () => {

@@ -2,8 +2,8 @@ import { CometChat } from "@cometchat-pro/chat";
 
 const InitializeApp = async () => {
   try {
-    const appId = "242094d7741aae9c";
-    const region = "EU";
+    const appId = "24230352cc3a1875";
+    const region = "us";
     const appSetting = new CometChat.AppSettingsBuilder()
       .subscribePresenceForAllUsers()
       .setRegion(region)

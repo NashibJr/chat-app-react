@@ -1,12 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/sidebar";
 import NavigationBar from "../components/navigationBar";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import Messages from "../components/messages";
 import { CometChat } from "@cometchat-pro/chat";
+import { useParams } from "react-router-dom";
+import helperFunctions from "../app/helperFunctions";
 
 const Main = () => {
   const listenerID = (Math.random() * 10000000).toFixed(0);
+  const { id } = useParams();
+  const [user, setUser] = useState({});
+
   useEffect(() => {
     CometChat.addLoginListener(
       listenerID,
@@ -19,7 +24,14 @@ const Main = () => {
         },
       })
     );
-  }, []);
+    fetchUsers();
+  }, [id]);
+
+  const fetchUsers = async () => {
+    const data = await helperFunctions.getUsers();
+    setUser(data.find((user) => user.uid === id));
+  };
+
   return (
     <div className="container-fluid d-flex">
       <Sidebar className="bg-danger" />
@@ -33,8 +45,8 @@ const Main = () => {
         </button>
       </div>
       <div className="container-fluid">
-        <NavigationBar />
-        <Messages />
+        <NavigationBar receiverName={user.name} status={user.status} />
+        {!id ? <h2>Nash chat App</h2> : <Messages id={id} />}
       </div>
     </div>
   );

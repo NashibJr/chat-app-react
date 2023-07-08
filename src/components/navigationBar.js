@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearUserOnLogout } from "../redux/users/userSlice";
 
-const NavigationBar = () => {
+const NavigationBar = ({ receiverName, status }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -23,7 +23,15 @@ const NavigationBar = () => {
       style={{ backgroundColor: "rgba(211, 211, 211, .2)" }}
     >
       <div className="d-flex justify-content-between border-bottom p-1 pb-2">
-        <div>Henry Thiery</div>
+        <div>
+          {!receiverName ? <div>Connect with friends</div> : receiverName}
+          <span
+            style={{ color: "green", fontSize: 12, marginLeft: 5 }}
+            className={status === "offline" ? "d-none" : "d-block"}
+          >
+            online
+          </span>
+        </div>
         <button type="button" className="button-content" onClick={handleLogout}>
           <span>Logout</span>
         </button>
