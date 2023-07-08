@@ -45,7 +45,7 @@ const Main = () => {
         </button>
       </div>
       <div className="container-fluid">
-        <NavigationBar receiverName={user.name} status={user.status} />
+        <NavigationBar receiverName={user?.name} status={user?.status} />
         {!id ? <h2>Nash chat App</h2> : <Messages id={id} />}
       </div>
     </div>

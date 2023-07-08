@@ -35,7 +35,7 @@ const Signup = () => {
   const handleSignup = async (event) => {
     try {
       event.preventDefault();
-      const authKey = "c62aad5841b744ffd11bc2e44f6b30c216fe2fd0";
+      const authKey = "8bccda8633ebf1a20a5ed594f48e37cc7d78c87f";
       const { username, password } = state;
       let user = new CometChat.User(password);
       user.setName(username);

@@ -14,7 +14,7 @@ const Sidebar = () => {
   }, [searchedUserName]);
 
   const user = useSelector((state) => state.user);
-  const username = user.user.name;
+  const username = user.name;
   const handle = `@${username?.toLowerCase().split(" ")[0]}`;
 
   const fetchUsers = async () => {

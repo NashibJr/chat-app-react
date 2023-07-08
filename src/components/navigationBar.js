@@ -27,7 +27,7 @@ const NavigationBar = ({ receiverName, status }) => {
           {!receiverName ? <div>Connect with friends</div> : receiverName}
           <span
             style={{ color: "green", fontSize: 12, marginLeft: 5 }}
-            className={status === "offline" ? "d-none" : "d-block"}
+            className={!status || status === "offline" ? "d-none" : "d-block"}
           >
             online
           </span>

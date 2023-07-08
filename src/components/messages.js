@@ -26,8 +26,6 @@ const Messages = ({ id }) => {
     }
   };
 
-  const handleSubmit = () => console.log("hell world!!!");
-
   const getRealTimeMessages = () => {
     try {
       let listenerID = (Math.random() * 100000).toFixed(0);
@@ -52,10 +50,10 @@ const Messages = ({ id }) => {
 
   const receiveMessages = async () => {
     try {
-      let UID = { id };
-      let limit = 30;
+      const UID = id;
+      const limit = 30;
 
-      var messagesRequest = new CometChat.MessagesRequestBuilder()
+      const messagesRequest = new CometChat.MessagesRequestBuilder()
         .setUID(UID)
         .setLimit(limit)
         .build();
@@ -76,16 +74,13 @@ const Messages = ({ id }) => {
           <p className="bg-dark p-2 rounded-1 w-50">Send messages</p>
         </div>
       </div>
-      <form
-        style={{ marginTop: "auto", marginBottom: -12 }}
-        onSubmit={handleSubmit}
-      >
+      <form style={{ marginTop: "auto", marginBottom: -12 }}>
         <input
           type="text"
           placeholder="Type a message..."
           className="input-content bg-light"
           style={{ width: "99%" }}
-          onChange={setMessage((event) => event.target.value)}
+          onChange={(event) => setMessage(event.target.value)}
         />
       </form>
     </div>
