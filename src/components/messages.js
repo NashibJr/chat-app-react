@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { CometChat } from "@cometchat-pro/chat";
-import User from "./user";
-import { useParams } from "react-router-dom";
 
 const Messages = ({ id }) => {
   const [message, setMessage] = useState("");
@@ -13,8 +11,8 @@ const Messages = ({ id }) => {
 
   const sendMessage = async () => {
     try {
-      const receiverId = "superhero2";
-      const messageText = "Hello bro!";
+      const receiverId = { id };
+      const messageText = message;
       const receiverType = CometChat.RECEIVER_TYPE.USER;
       const textMessage = new CometChat.TextMessage(
         receiverId,
@@ -27,6 +25,8 @@ const Messages = ({ id }) => {
       console.log(error);
     }
   };
+
+  const handleSubmit = () => console.log("hell world!!!");
 
   const getRealTimeMessages = () => {
     try {
@@ -52,7 +52,7 @@ const Messages = ({ id }) => {
 
   const receiveMessages = async () => {
     try {
-      let UID = "superhero1";
+      let UID = { id };
       let limit = 30;
 
       var messagesRequest = new CometChat.MessagesRequestBuilder()
@@ -76,13 +76,16 @@ const Messages = ({ id }) => {
           <p className="bg-dark p-2 rounded-1 w-50">Send messages</p>
         </div>
       </div>
-      <form style={{ marginTop: "auto", marginBottom: -12 }}>
+      <form
+        style={{ marginTop: "auto", marginBottom: -12 }}
+        onSubmit={handleSubmit}
+      >
         <input
           type="text"
           placeholder="Type a message..."
           className="input-content bg-light"
           style={{ width: "99%" }}
-          onChange={sendMessage}
+          onChange={setMessage((event) => event.target.value)}
         />
       </form>
     </div>
