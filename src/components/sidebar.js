@@ -1,11 +1,37 @@
-import React from "react";
-import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
-import users from "../dummy/users";
+import React, { useEffect, useState } from "react";
 import User from "./user";
+import { useSelector } from "react-redux";
+import helperFunctions from "../app/helperFunctions";
 
 const Sidebar = () => {
+  const [searchedUserName, setSearchUserName] = useState("");
+  const [wantedUsers, setWantedUsers] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    searchUsers();
+    fetchUsers();
+  }, [searchedUserName]);
+
+  const user = useSelector((state) => state.user);
+  const username = user.name;
+  const handle = `@${username?.toLowerCase().split(" ")[0]}`;
+
+  const fetchUsers = async () => {
+    const cometchatUsers = await helperFunctions.getUsers();
+    setUsers(cometchatUsers);
+  };
+
+  const searchUsers = () => {
+    const searchedUsers = users.filter((user) =>
+      user.name.includes(searchedUserName)
+    );
+    setWantedUsers(searchedUsers);
+  };
+
+  const renderedUsers = searchedUserName === "" ? users : wantedUsers;
   return (
-    <nav className="fixed-left navigation">
+    <nav className="fixed-left">
       {" "}
       <div className="container-fluid">
         <div className="row flex-nowrap">
@@ -13,36 +39,36 @@ const Sidebar = () => {
             <div id="sidebar" className="collapse collapse-horizontal show">
               <div id="sidebar-nav" className="list-group border-0 rounded-0">
                 <div className="p-2">
-                  <h4 style={{ width: "45vh" }} className="fw-bold">
-                    Marcus Rashford M.B.E
+                  <h4 style={{ width: "100%" }} className="fw-bold">
+                    {username}
                   </h4>
-                  <p>@john</p>
+                  <span className="d-flex flex-wrap justify-content-between">
+                    <p className="fw-bold">{handle}</p>
+                    <button
+                      type="button"
+                      className="btn btn-dark"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Explore friends
+                    </button>
+                  </span>
                 </div>
                 <div>
                   <input
                     type="text"
                     className="input-content bg-light"
                     placeholder="Search"
+                    onChange={(event) => setSearchUserName(event.target.value)}
                   />
                 </div>
                 <ul className="bg-light users">
-                  <li></li>
-                  {users.map((user) => (
-                    <User key={user.id} user={user} />
+                  {renderedUsers.map((user) => (
+                    <User key={user.uid} user={user} />
                   ))}
                 </ul>
               </div>
             </div>
-          </div>
-          <div className="col ps-md-2 pt-2">
-            <a
-              href="#"
-              data-bs-target="#sidebar"
-              data-bs-toggle="collapse"
-              className="border rounded-3 p-1 text-decoration-none"
-            >
-              <TbLayoutSidebarLeftCollapse />
-            </a>
           </div>
         </div>
       </div>
