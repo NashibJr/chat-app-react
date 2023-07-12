@@ -11,6 +11,7 @@ const Main = () => {
   const listenerID = (Math.random() * 10000000).toFixed(0);
   const { id } = useParams();
   const [user, setUser] = useState({});
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     CometChat.addLoginListener(
@@ -24,12 +25,28 @@ const Main = () => {
         },
       })
     );
+    receiveMessages();
     fetchUsers();
   }, [id]);
 
   const fetchUsers = async () => {
     const data = await helperFunctions.getUsers();
     setUser(data.find((user) => user.uid === id));
+  };
+  const receiveMessages = async () => {
+    try {
+      const UID = id;
+      const limit = 30;
+
+      const messagesRequest = new CometChat.MessagesRequestBuilder()
+        .setUID(UID)
+        .setLimit(limit)
+        .build();
+      let messages_ = await messagesRequest.fetchPrevious();
+      setMessages(messages_);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -46,7 +63,11 @@ const Main = () => {
       </div>
       <div className="container-fluid">
         <NavigationBar receiverName={user?.name} status={user?.status} />
-        {!id ? <h2>Nash chat App</h2> : <Messages id={id} />}
+        {!id ? (
+          <h2>Nash chat App</h2>
+        ) : (
+          <Messages id={id} messages={messages} />
+        )}
       </div>
     </div>
   );

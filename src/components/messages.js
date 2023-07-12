@@ -3,12 +3,10 @@ import { CometChat } from "@cometchat-pro/chat";
 import { BiSolidSend } from "react-icons/bi";
 import Message from "./message";
 
-const Messages = ({ id }) => {
+const Messages = ({ id, messages }) => {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    receiveMessages();
     getRealTimeMessages();
   }, [id]);
 
@@ -52,17 +50,19 @@ const Messages = ({ id }) => {
     }
   };
 
-  const receiveMessages = async () => {
+  const sendMedia = async (event) => {
     try {
-      const UID = id;
-      const limit = 30;
-
-      const messagesRequest = new CometChat.MessagesRequestBuilder()
-        .setUID(UID)
-        .setLimit(limit)
-        .build();
-      let messages_ = await messagesRequest.fetchPrevious();
-      setMessages(messages_);
+      const { files } = event.target;
+      let receiverID = id;
+      const messageType = CometChat.MESSAGE_TYPE.FILE;
+      const receiverType = CometChat.RECEIVER_TYPE.USER;
+      const mediaMessage = new CometChat.MediaMessage(
+        receiverID,
+        files[0],
+        messageType,
+        receiverType
+      );
+      await CometChat.sendMediaMessage(mediaMessage);
     } catch (error) {
       console.log(error);
     }
@@ -84,6 +84,18 @@ const Messages = ({ id }) => {
           className="input-content bg-light"
           style={{ width: "99%" }}
           onChange={(event) => setMessage(event.target.value)}
+        />
+        <input
+          type="file"
+          name="img_file"
+          accept="image/*"
+          style={{
+            width: 50,
+            height: 38,
+            transform: "translateY(13px)",
+            marginRight: 5,
+          }}
+          onChange={sendMedia}
         />
         <button
           type="button"
