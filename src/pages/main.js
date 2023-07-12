@@ -6,12 +6,14 @@ import Messages from "../components/messages";
 import { CometChat } from "@cometchat-pro/chat";
 import { useParams } from "react-router-dom";
 import helperFunctions from "../app/helperFunctions";
+import SinglePage from "./singlePage";
 
 const Main = () => {
   const listenerID = (Math.random() * 10000000).toFixed(0);
   const { id } = useParams();
   const [user, setUser] = useState({});
   const [messages, setMessages] = useState([]);
+  const [showPage, setShowPage] = useState(false);
 
   useEffect(() => {
     CometChat.addLoginListener(
@@ -30,8 +32,11 @@ const Main = () => {
   }, [id]);
 
   const fetchUsers = async () => {
-    const data = await helperFunctions.getUsers();
-    setUser(data.find((user) => user.uid === id));
+    const response = await helperFunctions.getUsers();
+    let data = response.find((user) => user.uid === id);
+    const name_ = data.name;
+    data = { ...data, handle: `@${name_.toLowerCase().split(" ")[0]}` };
+    setUser(data);
   };
   const receiveMessages = async () => {
     try {
@@ -49,6 +54,10 @@ const Main = () => {
     }
   };
 
+  const navigateToSinglePage = () => setShowPage(true);
+  console.log(user);
+  const hideSinglePage = () => setShowPage(false);
+
   return (
     <div className="container-fluid d-flex">
       <Sidebar className="bg-danger" />
@@ -62,11 +71,20 @@ const Main = () => {
         </button>
       </div>
       <div className="container-fluid">
-        <NavigationBar receiverName={user?.name} status={user?.status} />
+        <NavigationBar
+          receiverName={user?.name}
+          status={user?.status}
+          navigateToSinglePage={navigateToSinglePage}
+        />
         {!id ? (
           <h2>Nash chat App</h2>
         ) : (
-          <Messages id={id} messages={messages} />
+          <div>
+            <span className={`${showPage ? "d-none" : "d-flex"}`}>
+              <Messages id={id} messages={messages} />
+            </span>
+            <SinglePage user={user} hideSinglePage={hideSinglePage} />
+          </div>
         )}
       </div>
     </div>

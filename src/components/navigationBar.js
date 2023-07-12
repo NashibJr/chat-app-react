@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearUserOnLogout } from "../redux/users/userSlice";
 
-const NavigationBar = ({ receiverName, status }) => {
+const NavigationBar = ({ receiverName, status, navigateToSinglePage }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,7 +24,13 @@ const NavigationBar = ({ receiverName, status }) => {
     >
       <div className="d-flex justify-content-between border-bottom p-1 pb-2">
         <div>
-          {!receiverName ? <div>Connect with friends</div> : receiverName}
+          {!receiverName ? (
+            <div>Connect with friends</div>
+          ) : (
+            <span onClick={navigateToSinglePage} className="cursor-pointer">
+              {receiverName}
+            </span>
+          )}
           <span
             style={{ color: "green", fontSize: 12, marginLeft: 5 }}
             className={!status || status === "offline" ? "d-none" : "d-block"}
