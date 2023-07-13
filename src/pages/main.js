@@ -7,6 +7,8 @@ import { CometChat } from "@cometchat-pro/chat";
 import { useParams } from "react-router-dom";
 import helperFunctions from "../app/helperFunctions";
 import SinglePage from "./singlePage";
+import FriendsModal from "../modals/friendsModal";
+import BlockModal from "../modals/blockModal";
 
 const Main = () => {
   const listenerID = (Math.random() * 10000000).toFixed(0);
@@ -33,8 +35,8 @@ const Main = () => {
 
   const fetchUsers = async () => {
     const response = await helperFunctions.getUsers();
-    let data = response.find((user) => user.uid === id);
-    const name_ = data.name;
+    let data = response?.find((user) => user.uid === id);
+    const name_ = data?.name;
     data = { ...data, handle: `@${name_.toLowerCase().split(" ")[0]}` };
     setUser(data);
   };
@@ -80,13 +82,16 @@ const Main = () => {
           <h2>Nash chat App</h2>
         ) : (
           <div>
-            <span className={`${showPage ? "d-none" : "d-flex"}`}>
+            {!showPage ? (
               <Messages id={id} messages={messages} />
-            </span>
-            <SinglePage user={user} hideSinglePage={hideSinglePage} />
+            ) : (
+              <SinglePage user={user} hideSinglePage={hideSinglePage} />
+            )}
           </div>
         )}
       </div>
+      <FriendsModal />
+      <BlockModal id={id} />
     </div>
   );
 };

@@ -71,7 +71,7 @@ const Messages = ({ id, messages }) => {
   return (
     <div className="container-fluid mt-3 messages-content d-flex flex-column flex-wrap">
       <div className="messages">
-        {messages.map((message, index) => (
+        {messages?.map((message, index) => (
           <Message id={id} message={message} key={index} />
         ))}
       </div>

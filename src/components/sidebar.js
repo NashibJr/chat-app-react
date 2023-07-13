@@ -61,7 +61,7 @@ const Sidebar = () => {
                   />
                 </div>
                 <ul className="bg-light users">
-                  {renderedUsers.map((user) => (
+                  {renderedUsers?.map((user) => (
                     <User key={user.uid} user={user} />
                   ))}
                 </ul>
