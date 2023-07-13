@@ -1,10 +1,10 @@
 import React from "react";
 
-const Modal = ({ title, children }) => {
+const Modal = ({ title, children, modalID }) => {
   return (
     <div
       className="modal fade"
-      id="exampleModal"
+      id={modalID}
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import User from "./user";
 import { useSelector } from "react-redux";
 import helperFunctions from "../app/helperFunctions";
+import Button from "./button";
 
 const Sidebar = () => {
   const [searchedUserName, setSearchUserName] = useState("");
@@ -44,14 +45,11 @@ const Sidebar = () => {
                   </h4>
                   <span className="d-flex flex-wrap justify-content-between">
                     <p className="fw-bold">{handle}</p>
-                    <button
-                      type="button"
-                      className="btn btn-dark"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                    >
-                      Explore friends
-                    </button>
+                    <Button
+                      class_name="btn btn-dark"
+                      dismiss="#exampleModal"
+                      label="Explore friends"
+                    />
                   </span>
                 </div>
                 <div>

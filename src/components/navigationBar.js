@@ -27,7 +27,7 @@ const NavigationBar = ({ receiverName, status, navigateToSinglePage }) => {
           {!receiverName ? (
             <div>Connect with friends</div>
           ) : (
-            <span onClick={navigateToSinglePage} className="cursor-pointer">
+            <span onClick={navigateToSinglePage} style={{ cursor: "pointer" }}>
               {receiverName}
             </span>
           )}

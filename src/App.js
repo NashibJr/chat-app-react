@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/signup";
 import FriendsModal from "./modals/friendsModal";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import DeleteModal from "./modals/deleteModal";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         </Routes>
       </Router>
       <FriendsModal />
+      <DeleteModal />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../components/button";
 
 const SinglePage = ({ hideSinglePage, user: { avatar, name, handle } }) => {
   return (
@@ -10,9 +11,11 @@ const SinglePage = ({ hideSinglePage, user: { avatar, name, handle } }) => {
         <img src={avatar} width="100px" height="100px" alt="" />
         <p className="fw-bold mt-4">{name}</p>
         <p style={{ marginTop: -10 }}>{handle}</p>
-        <button type="button" className="btn btn-danger mt-5">
-          Block
-        </button>
+        <Button
+          class_name="btn btn-danger mt-5 fw-bold"
+          dismiss="#comfirm"
+          label="Block"
+        />
       </div>
     </div>
   );
